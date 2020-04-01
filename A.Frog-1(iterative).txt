@@ -1,0 +1,24 @@
+import java.util.*;
+public class Main{
+    public static void main(String[] args) {
+        Scanner in  = new Scanner(System.in);
+        int n = in.nextInt();
+        if(n==0){
+            System.out.println(0);
+            return;
+        }
+        int []arr = new int[n];
+        for(int i=0;i<n;i++)arr[i] = in.nextInt();
+        int []dp = new int[n];
+        dp[0] = 0;
+        for(int i=1;i<n;i++){
+            dp[i] = Integer.MAX_VALUE;
+            for(int k=-1;k>=-2;k--){
+                if((i+k)>=0){
+                    dp[i] = Math.min(dp[i],(Math.abs(arr[i]-arr[i+k]))+dp[i+k]);
+                }
+            }
+        }
+        System.out.println(dp[n-1]);
+    }
+}

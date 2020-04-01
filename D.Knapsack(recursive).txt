@@ -1,0 +1,28 @@
+import java.util.*;
+public class Main{
+    public static void main(String[] args) {
+        Scanner in  = new Scanner(System.in);
+        int n = in.nextInt();
+        int w = in.nextInt();
+        int []weights = new int[n];
+        int []values =  new int[n];
+        for(int i=0;i<n;i++){
+            weights[i] = in.nextInt();
+            values[i] = in.nextInt();
+        }
+        long [][]dp = new long[n][w+1];
+        for(long []i : dp)Arrays.fill(i,-1);
+        long ans = recur(0,w,weights,values,dp);
+        System.out.println(ans);
+    }
+    public static long recur(int index,int capacity,int []weights,int []values,long [][]dp){
+        if(index==weights.length)return 0;
+        if(capacity==0)return 0;
+        if(dp[index][capacity]!=-1)return dp[index][capacity];
+        long ans = recur(index+1,capacity,weights,values,dp);
+        if(weights[index]<=capacity){
+            ans = Math.max(ans,values[index]+recur(index+1,capacity-weights[index],weights,values,dp));
+        }
+        return dp[index][capacity] = ans;
+    }
+}

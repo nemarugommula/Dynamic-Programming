@@ -1,0 +1,29 @@
+import java.util.*;
+public class Main{
+    public static void main(String[] args) {
+        Scanner in  = new Scanner(System.in);
+        int n = in.nextInt();
+        int [][]arr = new int[n][3];
+        for(int i=0;i<n;i++){
+            arr[i][0] = in.nextInt();
+            arr[i][1] = in.nextInt();
+            arr[i][2] = in.nextInt();
+        }
+        int [][]dp = new int[n][3];
+        for(int []i : dp)Arrays.fill(i,-1);
+        int ans  = recur(0,arr,-1,dp);
+        System.out.println(ans);
+    }
+    public static int recur(int index,int [][]arr,int prev,int [][]dp){
+        if(index==arr.length)return 0;
+        int ans = 0;
+
+        if(prev!=-1&&dp[index][prev]!=-1)return dp[index][prev];
+        for(int i=0;i<3;i++){
+           if(i==prev)continue;
+           ans = Math.max(ans,arr[index][i]+recur(index+1,arr,i,dp));
+        }
+        if(prev==-1)return ans;
+        return dp[index][prev] = ans;
+    }
+}
